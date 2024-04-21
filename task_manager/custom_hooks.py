@@ -6,7 +6,9 @@ import frappe
 from frappe.frappe.utils import get_site_path
 
 from task_manager.utils import get_logger
-from task_manager.management.commands import management_commands_before_migration
+from task_manager.task_manager.management.commands import (
+    management_commands_before_migration
+)
 
 from .utils import backup_db
 from  .server import run_server

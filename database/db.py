@@ -6,31 +6,20 @@ from sqlalchemy.orm import sessionmaker
 
 
 __all__= [
-    "get_db_url",
     "get_engine", 
     "load_session", 
     "load_table"
 ]
-
-def get_db_url():
-    cfg =  configparser.ConfigParser()
-    cfg.read(os.path.join(os.path.dirname(__file__), "config.cfg"))
-    username = cfg.get("DB", "user", fallback=None)
-    password = cfg.get("DB", "pwd", fallback=None)
-    dbname = cfg.get("DB", "dbname", fallback=None)
-    db_url = f"postgresql://{username}:{password}@localhost/{dbname}"
-    return db_url
     
 
-def get_engine():
+def get_engine(db_url):
     "Returns an instance of the database engine."
-    db_url = get_db_url()
     return create_engine(db_url)
 
 
-def load_session():
+def load_session(db_url):
     """Returns an instance of the session."""
-    engine = get_engine()
+    engine = get_engine(db_url)
     Session = sessionmaker(bind=engine)
     session = Session()
     return session

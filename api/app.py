@@ -1,14 +1,27 @@
 import argparse
+import configparser
 import json
+import os
+
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
-from task_manager.api.db import get_db_url
-from task_manager.api.query import get_filtered_model_objects
+from task_manager.database.db import get_db_url
+from task_manager.database.query import get_filtered_model_objects
+
+def get_db_url():
+    cfg =  configparser.ConfigParser()
+    cfg.read(os.path.join(os.path.dirname(__file__), "config.cfg"))
+    username = cfg.get("DB", "user", fallback=None)
+    password = cfg.get("DB", "pwd", fallback=None)
+    dbname = cfg.get("DB", "dbname", fallback=None)
+    db_url = f"postgresql://{username}:{password}@localhost/{dbname}"
+    return db_url
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = get_db_url()
 db = SQLAlchemy(app)
+
 
 @app.route('/api/data', methods=['GET'])
 def get_data():

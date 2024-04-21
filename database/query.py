@@ -2,7 +2,7 @@ import operator
 
 from sqlalchemy.ext.declarative import declarative_base
 
-from task_manager.api.db import load_session, load_table
+from task_manager.database.db import load_session, load_table
 from task_manager.utils.custom_logger import get_logger
 
 
@@ -18,10 +18,11 @@ Base = declarative_base()
 logger = get_logger("api")
 
 
-def filter_table(table_name, column_name, **kwargs):
+def filter_table(session, table_name, column_name, **kwargs):
     """
     Filters a table for according to values given in kwargs dict
 
+    :param session: session instance.
     :param table_name: string name of table to be filtered
     :param column_name: string name of table column on which filter 
         will be applied
@@ -30,11 +31,11 @@ def filter_table(table_name, column_name, **kwargs):
     table = load_table(table_name)
     try:
         query = table.select().where(getattr(table.columns, column_name) == kwargs["column_name"])
-        session = load_session()
         return session.execute(query).fetchall()
     except Exception:
         logger.warning("Filter failed.")
     
+
 def get_operator_filter_param(column, operation, value):
     """
     Returns an operation using python's operator module based on the 
@@ -53,6 +54,7 @@ def get_operator_filter_param(column, operation, value):
         return operation(column, value)
     except AttributeError:
         logger.error(f"operator does not have operation {operation}") 
+
 
 def get_operator_filter_list(filter_dict):
     """
@@ -112,7 +114,7 @@ def get_objects_by_operator_filter(session, model, column, **kwargs):
     return objects
     
 
-def get_filtered_model_objects(model, **kwargs):
+def get_filtered_model_objects(session, model, **kwargs):
     """
     Returns model filtered by items in kwargs.
 
@@ -123,7 +125,6 @@ def get_filtered_model_objects(model, **kwargs):
 
     :return objects: filtered query of the model.
     """
-    session = load_session()
     objects = session.query(model).filter_by(**kwargs).all()
     return objects
 
