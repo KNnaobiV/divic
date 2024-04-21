@@ -6,6 +6,10 @@ app_email = "nnaobi.godson@gmail.com"
 app_license = "mit"
 # required_apps = []
 
+after_start = ["task_manager.custom_hooks.after_starts"]
+before_migrate = ["task_manager.custom_hooks.before_migrate"]
+after_migrate = ["task_manager.custom_hooks.after_migrate"]
+
 # Includes in <head>
 # ------------------
 

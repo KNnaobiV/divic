@@ -1,0 +1,104 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:project_name",
+ "creation": "2024-04-19 20:56:05.462415",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "project_name",
+  "project_owner",
+  "project_manager",
+  "status",
+  "cost",
+  "accouts",
+  "description"
+ ],
+ "fields": [
+  {
+   "fieldname": "project_name",
+   "fieldtype": "Data",
+   "label": "Name",
+   "unique": 1
+  },
+  {
+   "fieldname": "project_owner",
+   "fieldtype": "Data",
+   "label": "Owner"
+  },
+  {
+   "fieldname": "project_manager",
+   "fieldtype": "Link",
+   "label": "Manager",
+   "options": "User"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "InProgress\nCompleted\nPending"
+  },
+  {
+   "fieldname": "cost",
+   "fieldtype": "Float",
+   "label": "Cost"
+  },
+  {
+   "fieldname": "accouts",
+   "fieldtype": "Float",
+   "label": "Account"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-04-20 12:05:32.173472",
+ "modified_by": "Administrator",
+ "module": "Task Manager",
+ "name": "Project",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Project Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Developer",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
